@@ -35,7 +35,7 @@
 
 (define (cont-frac n d k)
   (if (= k 1)
-      1
+      (/ (n 1) (d 1))
       (/ (n k) (+ (d k) (cont-frac n d (- k 1))))))
 
 (cont-frac (lambda (i) 1.0)
@@ -49,7 +49,7 @@
     (if (= i k)
         result
         (iter (+ i 1) (/ (n i) (+ (d i) result)))))
-  (iter 1 1.0))
+  (iter 1 (/ (n 1) (d 1))))
 
 (cont-frac (lambda (i) 1.0)
            (lambda (i) 1.0)
