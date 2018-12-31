@@ -99,3 +99,80 @@
 
 (define (even? n)
   (= (remainder n 2) 0))
+
+
+(define (gcd a b)
+  (if (= b 0)
+      a
+      (gcd b (remainder a b))))
+
+
+(define (smallest-divisor n)
+
+  (define (divides? a b)
+    (= (remainder b a) 0))
+
+  (define (find-divisor n test-divisor)
+    (cond ((> (square test-divisor) n) n)
+          ((divides? test-divisor n) test-divisor)
+          (else (find-divisor n (+ test-divisor 1)))))
+
+  (find-divisor n 2))
+
+(define (prime? n)
+  (= (smallest-divisor n) n))
+
+
+(define (expmod base exponent m)
+  (cond ((= exponent 0) 1)
+        ((even? exponent)
+         (remainder (square (expmod base (/ exponent 2) m)) m))
+        (else
+         (remainder (* base (expmod base (- exponent 1) m)) m))))
+
+(define (fermat-test n)
+
+  (define (try-it a)
+    (= (expmod a n n) a))
+
+  (try-it (+ 1 (random (- n 1)))))
+
+(define (fast-prime? n times)
+  (cond ((= times 0) true)
+        ((fermat-test n) (fast-prime? n (- times 1)))
+        (else false)))
+
+
+;; Section 1.3
+
+(define (sum term a next b)
+  (if (> a b)
+      0
+      (+ (term a)
+         (sum term (next a) next b))))
+
+(define (inc n) (+ n 1))
+
+(define (sum-cubes a b)
+  (sum cube a inc b))
+
+(define (identity x) x)
+
+(define (sum-integers a b)
+  (sum identity a inc b))
+
+(define (pi-sum a b)
+
+  (define (pi-term x)
+    (/ 1.0 (* x (+ x 2))))
+
+  (define (pi-next x)
+    (+ x 4))
+
+  (sum pi-term a pi-next b))
+
+(define (integral f a b dx)
+
+  (define (add-dx x) (+ x dx))
+
+  (* (sum f (+ a (/ dx 2.0)) add-dx b) dx))
