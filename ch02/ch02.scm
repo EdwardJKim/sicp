@@ -36,3 +36,10 @@
   (display "/")
   (display (denom x)))
 
+
+;; Section 2.2
+
+(define (list-ref items n)
+  (if (= n 0)
+      (car items)
+      (list-ref (cdr items) (- n 1))))

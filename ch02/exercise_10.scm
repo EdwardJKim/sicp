@@ -6,12 +6,6 @@
 (load "exercise_09.scm")
 
 (define (div-interval x y)
-  (mul-interval x
-                (make-interval
-                 (/ 1.0 (upper-bound y))
-                 (/ 1.0 (lower-bound y)))))
-
-(define (div-interval x y)
   (if (or (= (lower-bound y) 0) (= (upper-bound y) 0))
       (error "Division by zero: CONS" (lower-bound y) (upper-bound y))
       (mul-interval x
