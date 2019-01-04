@@ -55,3 +55,11 @@
         ((not (pair? tree)) (* tree factor))
         (else (cons (scale-tree (car tree) factor)
                     (scale-tree (cdr tree) factor)))))
+
+(define (accumulate op initial sequence)
+  (if (null? sequence)
+      initial
+      (op (car sequence)
+          (accumulate op
+                      initial
+                      (cdr sequence)))))
